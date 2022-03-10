@@ -8,7 +8,7 @@ ENV REDISGEARS_PY_DIR /var/opt/redislabs/modules/rg
 ENV REDISGRAPH_DEPS libgomp1 git
 
 
-COPY --from=rejson ${LD_LIBRARY_PATH}/*.so ${LD_LIBRARY_PATH}/
+COPY --from=rejson ${LD_LIBRARY_PATH}/*.so /var/lib/redis/modules/
 
 WORKDIR .
 COPY redis.conf .
