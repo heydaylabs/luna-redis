@@ -1,5 +1,6 @@
-FROM redis:6-alpine
 FROM redislabs/rejson:latest as rejson
+FROM redis:6-alpine
+
 
 ENV LD_LIBRARY_PATH /usr/lib/redis/modules
 ENV REDISGEARS_MODULE_DIR /var/opt/redislabs/lib/modules
@@ -12,8 +13,11 @@ RUN apt-get upgrade -y
 RUN apt-get install -y --no-install-recommends ${REDISGRAPH_DEPS};
 RUN rm -rf /var/cache/apt
 
-COPY redis.conf .
+
 COPY --from=rejson ${LD_LIBRARY_PATH}/*.so ${LD_LIBRARY_PATH}/
+
+WORKDIR .
+COPY redis.conf .
 
 ENTRYPOINT ["redis-server", "./redis.conf"]
 CMD ["--loadmodule", "/var/lib/redis/modules/rejson.so"]
