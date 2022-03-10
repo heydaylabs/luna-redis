@@ -7,4 +7,4 @@ COPY redis.conf .
 COPY --from=rejson ${LD_LIBRARY_PATH}/*.so ${LD_LIBRARY_PATH}/
 
 ENTRYPOINT ["redis-server", "./redis.conf"]
-CMD ["--loadmodule", "/usr/lib/redis/modules/rejson.so"]
+CMD ["--loadmodule", "/var/lib/redis/modules/rejson.so"]
